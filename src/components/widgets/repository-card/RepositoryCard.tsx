@@ -27,24 +27,15 @@ export const RepositoryCard = ({ repository }: RepositoryCardProps) => {
       <div className={styles.content}>
         <div className={styles.topRow}>
           <h2 className={styles.title}>{repository.name}</h2>
-          <span
-            className={repository.private ? styles.badgePrivate : styles.badgePublic}
-          >
-            {repository.private ? "private" : "public"}
-          </span>
         </div>
 
         <p className={styles.owner}>{repository.owner.login}</p>
-        <p className={styles.description}>
-          {repository.description ?? "Repository description is not available."}
-        </p>
 
         <div className={styles.meta}>
-          <span className={styles.language}>
-            {repository.language ?? "No language"}
-          </span>
           <span>★ {repository.stargazers_count}</span>
-          <span>⑂ {repository.forks_count}</span>
+          {repository.language ? (
+            <span className={styles.language}>{repository.language}</span>
+          ) : null}
           <span>Updated {formatShortDate(repository.updated_at)}</span>
         </div>
       </div>

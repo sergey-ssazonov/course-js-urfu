@@ -57,7 +57,6 @@
 }
 
 .owner,
-.description,
 .meta {
   margin: 0;
   font-size: 14px;
@@ -67,38 +66,14 @@
   color: var(--color-text-muted);
 }
 
-.description {
-  margin-top: 6px;
-  color: var(--color-text-secondary);
-}
-
 .meta {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 12px;
   color: var(--color-text-muted);
 }
 
 .language {
-  color: var(--color-text-primary);
-}
-
-.badgePublic,
-.badgePrivate {
-  padding: 4px 8px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.badgePublic {
-  background: rgba(255, 85, 85, 0.12);
-  color: var(--color-accent-primary);
-}
-
-.badgePrivate {
-  background: rgba(0, 0, 0, 0.08);
   color: var(--color-text-primary);
 }
