@@ -1,0 +1,17 @@
+.app-layout {
+  min-height: 100vh;
+  padding: 32px 16px 48px;
+}
+
+.page-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .app-layout {
+    padding: 20px 12px 36px;
+  }
+}

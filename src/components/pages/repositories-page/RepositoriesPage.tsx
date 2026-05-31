@@ -8,6 +8,8 @@ import { RepositoryCard } from "components/widgets/repository-card/RepositoryCar
 import { useRepositoriesQuery } from "hooks/useRepositoriesQuery";
 
 import styles from "./RepositoriesPage.module.css";
+import { Link } from "@tanstack/react-router";
+import { Button } from "components/ui/Button";
 
 export const RepositoriesPage = () => {
   const { data, isLoading, isError, error } = useRepositoriesQuery();
@@ -45,19 +47,21 @@ export const RepositoriesPage = () => {
     return data.filter((repository) => {
       const matchesLanguage =
         !hasLanguageFilter ||
-        (repository.language !== null && selectedLanguages.includes(repository.language));
+        (repository.language !== null &&
+          selectedLanguages.includes(repository.language));
 
       const searchableText = [
         repository.name,
         repository.description ?? "",
         repository.language ?? "",
         repository.owner.login,
-        ]
+      ]
         .join(" ")
         .toLowerCase();
 
       const matchesSearch =
-        normalizedSearch.length === 0 || searchableText.includes(normalizedSearch);
+        normalizedSearch.length === 0 ||
+        searchableText.includes(normalizedSearch);
 
       return matchesLanguage && matchesSearch;
     });
@@ -65,6 +69,7 @@ export const RepositoriesPage = () => {
 
   return (
     <main className={styles.page}>
+      <Link to="/ui-kit">UI Kit</Link>
       <section className={styles.panel}>
         <div className={styles.searchRow}>
           <Input
@@ -104,7 +109,9 @@ export const RepositoriesPage = () => {
 
         {isError ? (
           <div className={styles.stateBox}>
-            {error instanceof Error ? error.message : "Failed to load repositories"}
+            {error instanceof Error
+              ? error.message
+              : "Failed to load repositories"}
           </div>
         ) : null}
 

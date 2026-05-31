@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import cn from "classnames";
 
-import { Loader } from "components/ui/Loader";
 import { useRepositoryCommitActivityQuery } from "hooks/useRepositoryQuery";
 
 import styles from "./RepositoryContributions.module.css";
@@ -211,7 +210,7 @@ export const RepositoryContributions = ({
         {renderChart(placeholderChart, true)}
         <div className={styles.pendingState}>
           <p className={styles.state}>
-           Сейчас график заполнен тестовыми данными. Пока GitHub собирает аналитику
+            Сейчас график заполнен тестовыми данными. Пока GitHub собирает аналитику
           </p>
         </div>
       </section>
