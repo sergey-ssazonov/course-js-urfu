@@ -574,6 +574,11 @@ caniuse-lite@^1.0.30001782:
   resolved "https://nexus.kontur.host/repository/kontur-npm-group/caniuse-lite/-/caniuse-lite-1.0.30001793.tgz#238887ddf5fcfc8c36d872394d0a78a517312a72"
   integrity sha512-iwSsYWaCOoh26cV8NwNRViHlrfUvYsHDfRVcbtmw0Kg6PJIZZXwMkj1442FYLBGkeUf1juAsU3DTfxW579mrPA==
 
+classnames@^2.5.1:
+  version "2.5.1"
+  resolved "https://nexus.kontur.host/repository/kontur-npm-group/classnames/-/classnames-2.5.1.tgz#ba774c614be0f016da105c858e7159eae8e7687b"
+  integrity sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==
+
 convert-source-map@^2.0.0:
   version "2.0.0"
   resolved "https://nexus.kontur.host/repository/kontur-npm-group/convert-source-map/-/convert-source-map-2.0.0.tgz#4b560f649fc4e918dd0ab75cf4961e8bc882d82a"

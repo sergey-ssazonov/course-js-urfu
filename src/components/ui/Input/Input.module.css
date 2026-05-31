@@ -1,0 +1,69 @@
+.root {
+  position: relative;
+
+  width: 295px;
+  max-width: 100%;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.control {
+  width: 100%;
+  height: 50px;
+  padding: 0 12px;
+
+  border: 1px solid var(--color-border-primary);
+  border-radius: 6px;
+
+  font: inherit;
+  font-size: 14px;
+  color: var(--color-text-primary);
+  background: var(--color-bg-surface);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.control::placeholder {
+  color: var(--color-text-muted);
+}
+
+.root:hover .control {
+  border-color: var(--color-border-hover);
+}
+
+.root:focus-within .control {
+  border-color: var(--color-accent-primary);
+  box-shadow: 0 0 0 4px rgba(255, 85, 85, 0.14);
+  outline: none;
+}
+
+.loading .control {
+  padding-right: 40px;
+}
+
+.disabled .control {
+  color: var(--color-text-muted);
+  background: var(--color-bg-page);
+  cursor: not-allowed;
+}
+
+.disabled:hover .control {
+  border-color: var(--color-border-primary);
+}
+
+.adornment {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
