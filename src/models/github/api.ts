@@ -24,6 +24,21 @@ export interface GithubRepositoryDTO {
 
 export interface GithubBranchDTO {
   name: string;
+  protected: boolean;
+}
+
+export interface GithubCommitActivityWeekDTO {
+  days: number[];
+  total: number;
+  week: number;
+}
+
+export interface GithubContributorDTO {
+  id: number;
+  login: string;
+  avatar_url: string;
+  html_url: string;
+  contributions: number;
 }
 
 export interface RepositoriesRequest {
@@ -37,8 +52,16 @@ export interface RepositoryRequest {
 
 export type RepositoryBranchesRequest = RepositoryRequest;
 
+export type RepositoryCommitActivityRequest = RepositoryRequest;
+
+export type RepositoryContributorsRequest = RepositoryRequest;
+
 export type RepositoriesResponse = GithubRepositoryDTO[];
 
 export type RepositoryResponse = GithubRepositoryDTO;
 
 export type RepositoryBranchesResponse = GithubBranchDTO[];
+
+export type RepositoryCommitActivityResponse = GithubCommitActivityWeekDTO[] | null;
+
+export type RepositoryContributorsResponse = GithubContributorDTO[];

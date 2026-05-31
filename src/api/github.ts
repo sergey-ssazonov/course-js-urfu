@@ -7,6 +7,10 @@ import type {
   RepositoriesResponse,
   RepositoryBranchesRequest,
   RepositoryBranchesResponse,
+  RepositoryCommitActivityRequest,
+  RepositoryCommitActivityResponse,
+  RepositoryContributorsRequest,
+  RepositoryContributorsResponse,
   RepositoryRequest,
   RepositoryResponse,
 } from "models/github/api";
@@ -20,10 +24,18 @@ const createGithubHeaders = () => {
   };
 };
 
-const request = async <T>(path: string) => {
+interface RequestOptions {
+  acceptPending?: boolean;
+}
+
+const request = async <T>(path: string, options?: RequestOptions) => {
   const response = await fetch(`${GITHUB_API_BASE_URL}${path}`, {
     headers: createGithubHeaders(),
   });
+
+  if (options?.acceptPending && response.status === 202) {
+    return null as T;
+  }
 
   if (!response.ok) {
     if (response.status === 404) {
@@ -47,3 +59,20 @@ export const getRepositoryBranches = ({
   repo,
 }: RepositoryBranchesRequest) =>
   request<RepositoryBranchesResponse>(`/repos/${owner}/${repo}/branches`);
+
+export const getRepositoryCommitActivity = ({
+  owner,
+  repo,
+}: RepositoryCommitActivityRequest) =>
+  request<RepositoryCommitActivityResponse>(
+    `/repos/${owner}/${repo}/stats/commit_activity`,
+    {
+      acceptPending: true,
+    },
+  );
+
+export const getRepositoryContributors = ({
+  owner,
+  repo,
+}: RepositoryContributorsRequest) =>
+  request<RepositoryContributorsResponse>(`/repos/${owner}/${repo}/contributors`);
