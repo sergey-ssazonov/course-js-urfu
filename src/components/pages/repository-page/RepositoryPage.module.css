@@ -53,6 +53,44 @@
   font-weight: 700;
 }
 
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.metric {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  color: var(--color-text-muted);
+}
+
+.metricIcon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.metricValue {
+  font-size: 20px;
+  color: var(--color-text-muted);
+}
+
+.metricLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .section {
   display: flex;
   flex-direction: column;
@@ -75,22 +113,55 @@
   color: var(--color-accent-primary);
 }
 
-.divider {
-  width: 100%;
-  height: 1px;
-  background: var(--color-text-muted);
+.metaList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.metaList,
+.metaList {
+  align-items: center;
+  color: var(--color-text-muted);
+}
+
+.metaList a {
+  text-decoration: none;
+}
+
 .branches {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 8px;
+}
+
+.branchRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.branchDivider {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: #bebebe;
+}
+
+.branchBadge {
+  color: #bebebe;
+  font-size: 12px;
+  text-transform: uppercase;
 }
 
 @media (max-width: 768px) {
   .panel {
     width: 100%;
     min-height: auto;
+  }
+
+  .metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

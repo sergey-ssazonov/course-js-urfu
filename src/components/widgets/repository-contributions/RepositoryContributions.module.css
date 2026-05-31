@@ -1,0 +1,85 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.subtitle,
+.state {
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.pendingState {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chart {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 2px 0;
+  width: 100%;
+}
+
+.months,
+.weeks {
+  width: 100%;
+  display: grid;
+  column-gap: 2px;
+}
+
+.monthLabel {
+  min-height: 16px;
+  font-size: clamp(8px, 1.6vw, 12px);
+  line-height: 1;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.weekColumn {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2px;
+  gap: 2px;
+}
+
+.cell {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 2px;
+}
+
+.templateCell {
+  opacity: 0.82;
+}
+
+.cellnone {
+  background: #cbcbcb;
+}
+
+.celllow {
+  background: #63ffd3;
+}
+
+.cellmedium {
+  background: #00c78f;
+}
+
+.cellhigh {
+  background: #007251;
+}
