@@ -28,23 +28,24 @@
     transform 0.1s ease;
 }
 
-.button:hover:not(:disabled) {
+.button[data-hovered] {
   background: var(--color-accent-primary-hover);
   box-shadow: 0 16px 30px rgba(255, 85, 85, 0.24);
 }
 
-.button:focus-visible {
+.button[data-focus-visible] {
   outline: none;
   box-shadow:
     0 0 0 4px rgba(255, 85, 85, 0.18),
     0 16px 30px rgba(255, 85, 85, 0.24);
 }
 
-.button:active:not(:disabled) {
+.button[data-pressed] {
   transform: translateY(1px);
 }
 
-.button:disabled {
+.button[data-disabled],
+.button[data-pending] {
   background: var(--color-border-primary);
   box-shadow: none;
   cursor: not-allowed;

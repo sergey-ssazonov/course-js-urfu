@@ -1,13 +1,15 @@
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ReactNode } from "react";
 import cn from "classnames";
+import { Button as AriaButton, type ButtonProps as AriaButtonProps } from "react-aria-components";
 
 import { Loader } from "../Loader";
 import styles from "./IconButton.module.css";
 
 export interface IconButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement> {
+  extends Omit<AriaButtonProps, "isDisabled"> {
   children?: ReactNode;
   loading?: boolean;
+  disabled?: boolean;
 }
 
 const SearchIcon = () => (
@@ -32,14 +34,12 @@ export const IconButton = ({
   type = "button",
   ...props
 }: IconButtonProps) => {
-  const isDisabled = disabled || loading;
-
   return (
-    <button
+    <AriaButton
       {...props}
       type={type}
-      disabled={isDisabled}
-      aria-busy={loading}
+      isDisabled={disabled}
+      isPending={loading}
       className={cn(
         styles.button,
         {
@@ -49,6 +49,6 @@ export const IconButton = ({
       )}
     >
       {loading ? <Loader size="s" tone="light" aria-hidden="true" /> : children ?? <SearchIcon />}
-    </button>
+    </AriaButton>
   );
 };

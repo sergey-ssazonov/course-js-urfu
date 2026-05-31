@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import type { InputHTMLAttributes } from "react";
 import cn from "classnames";
+import { Input as AriaInput } from "react-aria-components";
 
 import { Loader } from "../Loader";
 import styles from "./Input.module.css";
@@ -36,7 +37,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           className,
         )}
       >
-        <input
+        <AriaInput
           {...props}
           ref={ref}
           className={styles.control}

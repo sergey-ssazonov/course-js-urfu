@@ -1,13 +1,15 @@
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ReactNode } from "react";
 import cn from "classnames";
+import { Button as AriaButton, type ButtonProps as AriaButtonProps } from "react-aria-components";
 
 import { Loader } from "../Loader";
 import styles from "./Button.module.css";
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends Omit<AriaButtonProps, "isDisabled"> {
   children?: ReactNode;
   loading?: boolean;
   fullWidth?: boolean;
+  disabled?: boolean;
 }
 
 export const Button = ({
@@ -19,14 +21,12 @@ export const Button = ({
   type = "button",
   ...props
 }: ButtonProps) => {
-  const isDisabled = disabled || loading;
-
   return (
-    <button
+    <AriaButton
       {...props}
       type={type}
-      disabled={isDisabled}
-      aria-busy={loading}
+      isDisabled={disabled}
+      isPending={loading}
       className={cn(
         styles.button,
         {
@@ -39,6 +39,6 @@ export const Button = ({
       {loading && <Loader size="s" tone="light" aria-hidden="true" />}
 
       <span className={styles.content}>{children}</span>
-    </button>
+    </AriaButton>
   );
 };

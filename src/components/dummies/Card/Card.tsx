@@ -1,16 +1,17 @@
-import type { ButtonHTMLAttributes } from "react";
 import cn from "classnames";
+import { Button as AriaButton, type ButtonProps as AriaButtonProps } from "react-aria-components";
 
 import { Loader } from "../../ui/Loader";
 import styles from "./Card.module.css";
 
-export interface CardProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface CardProps extends Omit<AriaButtonProps, "isDisabled"> {
   repositoryName: string;
   organizationName: string;
   stars: number;
   updatedAt: string;
   avatarUrl?: string;
   loading?: boolean;
+  disabled?: boolean;
 }
 
 const StarIcon = () => (
@@ -39,23 +40,22 @@ export const Card = ({
   type = "button",
   ...props
 }: CardProps) => {
-  const isDisabled = disabled || loading;
   const firstLetter = repositoryName.charAt(0).toUpperCase() || "G";
 
   return (
-    <button
+    <AriaButton
       {...props}
       type={type}
-      disabled={isDisabled}
-      aria-busy={loading}
+      isDisabled={disabled}
+      isPending={loading}
       className={cn(
         styles.card,
         {
           [styles.loading]: loading,
         },
         className,
-      )}
-    >
+        )}
+      >
       <span className={styles.avatarSlot} aria-hidden="true">
         {loading ? (
           <Loader size="m" tone="muted" aria-hidden="true" />
@@ -85,6 +85,6 @@ export const Card = ({
           </>
         )}
       </span>
-    </button>
+    </AriaButton>
   );
 };

@@ -23,11 +23,11 @@
     transform 0.15s ease;
 }
 
-.card:hover:not(:disabled) {
+.card[data-hovered] {
   box-shadow: 0 2px 6px rgba(181, 181, 181, 0.25);
 }
 
-.card:focus-visible {
+.card[data-focus-visible] {
   border-color: var(--color-accent-primary);
   box-shadow:
     0 0 0 4px rgba(255, 85, 85, 0.14),
@@ -35,7 +35,8 @@
   outline: none;
 }
 
-.card:disabled {
+.card[data-disabled],
+.card[data-pending] {
   cursor: not-allowed;
 }
 

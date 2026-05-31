@@ -1,12 +1,18 @@
 import {
-  useEffect,
-  useId,
   useMemo,
-  useRef,
   useState,
-  type ButtonHTMLAttributes,
 } from "react";
 import cn from "classnames";
+import {
+  Button as AriaButton,
+  DialogTrigger,
+  ListBox,
+  ListBoxItem,
+  Popover,
+  type ButtonProps as AriaButtonProps,
+  type Selection,
+} from "react-aria-components";
+import type { Key } from "@react-types/shared";
 
 import { Loader } from "../Loader";
 import styles from "./MultiDropdown.module.css";
@@ -17,7 +23,10 @@ export interface MultiDropdownOption {
 }
 
 export interface MultiDropdownProps
-  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "value" | "defaultValue" | "onChange"> {
+  extends Omit<
+    AriaButtonProps,
+    "children" | "value" | "defaultValue" | "onChange" | "isDisabled"
+  > {
   options: MultiDropdownOption[];
   value?: string[];
   defaultValue?: string[];
@@ -25,6 +34,7 @@ export interface MultiDropdownProps
   placeholder?: string;
   loading?: boolean;
   defaultOpen?: boolean;
+  disabled?: boolean;
 }
 
 const ChevronIcon = ({ open }: { open: boolean }) => (
@@ -53,35 +63,14 @@ export const MultiDropdown = ({
   defaultOpen = false,
   disabled,
   className,
-  onClick,
   ...props
 }: MultiDropdownProps) => {
-  const listId = useId();
-  const rootRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const [internalValue, setInternalValue] = useState(defaultValue);
 
   const isControlled = value !== undefined;
   const selectedValue = isControlled ? value : internalValue;
   const isDisabled = disabled || loading;
-
-  useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
-
-    const handlePointerDown = (event: MouseEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handlePointerDown);
-
-    return () => {
-      document.removeEventListener("mousedown", handlePointerDown);
-    };
-  }, [isOpen]);
 
   const selectedLabels = useMemo(
     () =>
@@ -93,10 +82,12 @@ export const MultiDropdown = ({
 
   const displayValue = selectedLabels.length > 0 ? selectedLabels.join(", ") : placeholder;
 
-  const toggleOption = (optionValue: string) => {
-    const nextValue = selectedValue.includes(optionValue)
-      ? selectedValue.filter((item) => item !== optionValue)
-      : [...selectedValue, optionValue];
+  const handleSelectionChange = (keys: Selection) => {
+    if (keys === "all") {
+      return;
+    }
+
+    const nextValue = Array.from(keys) as string[];
 
     if (!isControlled) {
       setInternalValue(nextValue);
@@ -106,31 +97,19 @@ export const MultiDropdown = ({
   };
 
   return (
-    <div
-      ref={rootRef}
-      className={cn(
-        styles.root,
-        {
-          [styles.disabled]: isDisabled,
-        },
-        className,
-      )}
-    >
-      <button
+    <DialogTrigger isOpen={isOpen && !isDisabled} onOpenChange={setIsOpen}>
+      <AriaButton
         {...props}
         type="button"
-        disabled={isDisabled}
-        aria-expanded={isOpen}
-        aria-haspopup="listbox"
-        aria-controls={listId}
-        className={styles.trigger}
-        onClick={(event) => {
-          onClick?.(event);
-
-          if (!isDisabled) {
-            setIsOpen((open) => !open);
-          }
-        }}
+        isDisabled={isDisabled}
+        className={cn(
+          styles.trigger,
+          {
+            [styles.open]: isOpen,
+            [styles.disabled]: isDisabled,
+          },
+          className,
+        )}
       >
         <span
           className={cn(styles.value, {
@@ -143,30 +122,29 @@ export const MultiDropdown = ({
         <span className={styles.endAdornment}>
           {loading ? <Loader size="s" aria-hidden="true" /> : <ChevronIcon open={isOpen} />}
         </span>
-      </button>
+      </AriaButton>
 
-      {isOpen && !isDisabled ? (
-        <div id={listId} className={styles.menu} role="listbox" aria-multiselectable="true">
-          {options.map((option) => {
-            const isSelected = selectedValue.includes(option.value);
-
-            return (
-              <button
-                key={option.value}
-                type="button"
-                role="option"
-                aria-selected={isSelected}
-                className={cn(styles.option, {
-                  [styles.optionSelected]: isSelected,
-                })}
-                onClick={() => toggleOption(option.value)}
-              >
-                {option.label}
-              </button>
-            );
-          })}
-        </div>
-      ) : null}
-    </div>
+      <Popover offset={8} className={styles.popover}>
+        <ListBox
+          aria-label={placeholder}
+          className={styles.menu}
+          selectionMode="multiple"
+          selectionBehavior="toggle"
+          selectedKeys={new Set<Key>(selectedValue)}
+          onSelectionChange={handleSelectionChange}
+        >
+          {options.map((option) => (
+            <ListBoxItem
+              key={option.value}
+              id={option.value}
+              textValue={option.label}
+              className={styles.option}
+            >
+              {option.label}
+            </ListBoxItem>
+          ))}
+        </ListBox>
+      </Popover>
+    </DialogTrigger>
   );
 };

@@ -32,11 +32,11 @@
   color: var(--color-text-muted);
 }
 
-.root:hover .control {
+.control[data-hovered] {
   border-color: var(--color-border-hover);
 }
 
-.root:focus-within .control {
+.control[data-focus-visible] {
   border-color: var(--color-accent-primary);
   box-shadow: 0 0 0 4px rgba(255, 85, 85, 0.14);
   outline: none;
@@ -52,7 +52,7 @@
   cursor: not-allowed;
 }
 
-.disabled:hover .control {
+.control[data-disabled][data-hovered] {
   border-color: var(--color-border-primary);
 }
 

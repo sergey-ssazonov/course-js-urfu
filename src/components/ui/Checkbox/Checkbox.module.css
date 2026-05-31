@@ -8,12 +8,6 @@
   user-select: none;
 }
 
-.input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
 .box {
   width: 30px;
   height: 30px;
@@ -45,30 +39,30 @@
   transition: opacity 0.2s ease;
 }
 
-.root:hover .box {
+.root[data-hovered] .box {
   border-color: var(--color-accent-primary);
 }
 
-.input:focus-visible + .box {
+.root[data-focus-visible] .box {
   border-color: var(--color-accent-primary);
   box-shadow: 0 0 0 4px rgba(255, 85, 85, 0.14);
   outline: none;
 }
 
-.input:checked + .box .checkmark,
+.root[data-selected] .checkmark,
 .root[data-force-checked="true"] .checkmark {
   opacity: 1;
 }
 
-.disabled {
+.root[data-disabled] {
   cursor: not-allowed;
 }
 
-.disabled .box {
+.root[data-disabled] .box {
   background: var(--color-bg-page);
 }
 
-.disabled .label {
+.root[data-disabled] .label {
   color: var(--color-text-muted);
 }
 
