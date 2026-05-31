@@ -1,11 +1,7 @@
-import "./App.css";
+import { AppRouterProvider } from "app/providers/router";
 
 function App() {
-  return (
-    <section>
-      <h1>Сазонов Сергей!</h1>
-    </section>
-  );
+  return <AppRouterProvider />;
 }
 
 export default App;
