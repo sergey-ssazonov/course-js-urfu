@@ -1,0 +1,127 @@
+.trigger {
+  width: 100%;
+  max-width: 295px;
+  height: 50px;
+  padding: 0 12px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  border: 1px solid var(--color-border-primary);
+  border-radius: 6px;
+
+  font: inherit;
+  font-size: 14px;
+  color: var(--color-text-primary);
+  background: var(--color-bg-surface);
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.trigger[data-hovered] {
+  border-color: var(--color-border-hover);
+}
+
+.trigger[data-focus-visible],
+.open {
+  border-color: var(--color-accent-primary);
+  box-shadow: 0 0 0 4px rgba(255, 85, 85, 0.14);
+  outline: none;
+}
+
+.value {
+  min-width: 0;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.placeholder {
+  color: var(--color-text-muted);
+}
+
+.endAdornment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #6c757d;
+}
+
+.chevron {
+  width: 11px;
+  height: 7px;
+  transition: transform 0.2s ease;
+}
+
+.trigger[data-pressed] {
+  transform: translateY(1px);
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.popover {
+  width: 100%;
+  max-width: 295px;
+}
+
+.menu {
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid var(--color-border-primary);
+  background: var(--color-bg-surface);
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.07);
+  outline: none;
+}
+
+.option {
+  width: 100%;
+  min-height: 48px;
+  padding: 16px 12px;
+
+  display: flex;
+  align-items: center;
+
+  border: none;
+  border-bottom: 1px solid var(--color-border-primary);
+  background: var(--color-bg-surface);
+
+  font: inherit;
+  font-size: 14px;
+  color: var(--color-text-primary);
+  text-align: left;
+  cursor: default;
+
+  transition: background-color 0.2s ease;
+}
+
+.option:last-child {
+  border-bottom: none;
+}
+
+.option[data-hovered],
+.option[data-focused],
+.option[data-selected] {
+  background: var(--color-bg-surface-muted);
+}
+
+.trigger[data-disabled],
+.disabled {
+  color: var(--color-text-muted);
+  background: var(--color-bg-page);
+  cursor: not-allowed;
+}
+
+.trigger[data-disabled][data-hovered] {
+  border-color: var(--color-border-primary);
+}

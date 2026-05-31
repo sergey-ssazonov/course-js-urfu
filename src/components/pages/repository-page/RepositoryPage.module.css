@@ -1,0 +1,167 @@
+.panel {
+  width: min(600px, 100%);
+  min-height: 680px;
+  padding: 20px;
+  background: var(--color-bg-surface);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.backLink {
+  width: 50px;
+  height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  font-size: 26px;
+}
+
+.titleBlock {
+  min-width: 0;
+  flex: 1;
+}
+
+.repositoryAvatar {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--color-accent-primary);
+  color: var(--color-text-inverse);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.metric {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  color: var(--color-text-muted);
+}
+
+.metricIcon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.metricValue {
+  font-size: 20px;
+  color: var(--color-text-muted);
+}
+
+.metricLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.section p,
+.section a {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-text-primary);
+}
+
+.section a {
+  color: var(--color-accent-primary);
+}
+
+.metaList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.metaList {
+  align-items: center;
+  color: var(--color-text-muted);
+}
+
+.metaList a {
+  text-decoration: none;
+}
+
+.branches {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.branchRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.branchDivider {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: #bebebe;
+}
+
+.branchBadge {
+  color: #bebebe;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .panel {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
