@@ -1,8 +1,9 @@
-import { useMemo, useState } from "react";
+import { useDeferredValue, useMemo, useState } from "react";
 
 import { GITHUB_USERNAME } from "app/constants/github";
 import { IconButton } from "components/ui/IconButton";
 import { Input } from "components/ui/Input";
+import { MultiDropdown } from "components/ui/MultiDropdown";
 import { RepositoryCard } from "components/widgets/repository-card/RepositoryCard";
 import { useRepositoriesQuery } from "hooks/useRepositoriesQuery";
 
@@ -11,31 +12,56 @@ import styles from "./RepositoriesPage.module.css";
 export const RepositoriesPage = () => {
   const { data, isLoading, isError, error } = useRepositoriesQuery();
   const [searchValue, setSearchValue] = useState("");
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+  const deferredSearchValue = useDeferredValue(searchValue);
+
+  const languageOptions = useMemo(() => {
+    if (!data) {
+      return [];
+    }
+
+    return Array.from(
+      new Set(
+        data
+          .map((repository) => repository.language)
+          .filter((language): language is string => Boolean(language)),
+      ),
+    )
+      .sort((left, right) => left.localeCompare(right))
+      .map((language) => ({
+        value: language,
+        label: language,
+      }));
+  }, [data]);
 
   const filteredRepositories = useMemo(() => {
     if (!data) {
       return [];
     }
 
-    const normalizedSearch = searchValue.trim().toLowerCase();
-
-    if (!normalizedSearch) {
-      return data;
-    }
+    const normalizedSearch = deferredSearchValue.trim().toLowerCase();
+    const hasLanguageFilter = selectedLanguages.length > 0;
 
     return data.filter((repository) => {
+      const matchesLanguage =
+        !hasLanguageFilter ||
+        (repository.language !== null && selectedLanguages.includes(repository.language));
+
       const searchableText = [
         repository.name,
         repository.description ?? "",
         repository.language ?? "",
         repository.owner.login,
-      ]
+        ]
         .join(" ")
         .toLowerCase();
 
-      return searchableText.includes(normalizedSearch);
+      const matchesSearch =
+        normalizedSearch.length === 0 || searchableText.includes(normalizedSearch);
+
+      return matchesLanguage && matchesSearch;
     });
-  }, [data, searchValue]);
+  }, [data, deferredSearchValue, selectedLanguages]);
 
   return (
     <main className={styles.page}>
@@ -55,8 +81,21 @@ export const RepositoriesPage = () => {
         </div>
 
         <div className={styles.panelHeader}>
-          <h2 className={styles.panelTitle}>Repositories</h2>
-          <p className={styles.panelSubtitle}>@{GITHUB_USERNAME}</p>
+          <div>
+            <h2 className={styles.panelTitle}>Repositories</h2>
+            <p className={styles.panelSubtitle}>@{GITHUB_USERNAME}</p>
+          </div>
+
+          <div className={styles.dropdownWrap}>
+            <MultiDropdown
+              aria-label="Filter repositories by language"
+              options={languageOptions}
+              value={selectedLanguages}
+              onChange={setSelectedLanguages}
+              placeholder="Languages"
+              disabled={languageOptions.length === 0}
+            />
+          </div>
         </div>
 
         {isLoading ? (
@@ -77,7 +116,7 @@ export const RepositoriesPage = () => {
 
         {!isLoading && !isError && data && filteredRepositories.length === 0 ? (
           <div className={styles.stateBox}>
-            Nothing found for `{searchValue}`.
+            Ничего не нашлось, попробуйте поменять запрос или фильтр
           </div>
         ) : null}
 
